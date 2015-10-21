@@ -1,0 +1,28 @@
+
+"" In my testing project. This function takes in a filename and will allow the
+"" User to edit that file in a new split. the file will be saved in the
+"" Current working directory.
+function CreateTest(testName)
+  :execute "split" a:testName
+endfunction 
+
+"" function to run a test by the filename
+function RunTest(testName)
+  "" Checking if the file exists
+  if filereadable(a:testName)
+    "" file does exist, run test
+    :execute "new | 0read ! ruby ~/Dropbox/Programming/testingSystem/main.rb" a:testName 
+  else 
+    "" file does NOT exist. throw error
+    echo "Error: File does not exist"
+  endif
+endfunction
+
+"" Commands for the testing functions
+
+"" Allows adding and editing of test files
+"" Call with :Addtest filename
+command! -nargs=1 Addtest call CreateTest(<f-args>)
+
+"" Runs a test name
+command! -nargs=1 Runtest call RunTest(<f-args>)

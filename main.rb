@@ -64,11 +64,36 @@ class TestFile
       #Returns all of the test commands
       return testCases
     end
+
+    
+    # Returns stdout on success, false on failure, nil on error
+    #
+    def syscall(*cmd)
+      begin
+          stdout, stderr, status = Open3.capture3(*cmd)
+          # strip trailing eol
+          status.success? && stdout.slice!(0..-(1 + $/.size)) 
+
+          stderr = stderr
+      rescue
+      end
+    end
+
+    def runTests()
+        #run the tests
+        testCases = processFile()
+
+        for tcase in testCases do
+          puts "Running test: " + tcase
+          system(tcase)
+          print "\n"
+        end
+    end
 end
 
 def testFile(fname)
   a = TestFile.new(fname)
-  return a.processFile()
+  return a.runTests()
 end 
 
-puts testFile(ARGV[0])
+testFile(ARGV[0])

@@ -1,0 +1,50 @@
+Todo list and project plan:
+
+Integrating with vim:
+the end goal of this project is to allow easier testing while inside vim.
+It should ultimately allow the programmer to enter either a command or a 
+keyboard command and get into a new buffer to write a test.
+
+Problems with design:
+Where are things being stored? like test cases? Should there be a file that
+stores all the information about a project somewhere? then in that file, is a
+list of test_names and the according functions that they are testing, as well
+as the locations of the files?
+
+I know that 
+
+Version 1:
+So one major issue right now with the design is that I need to have a place to 
+define variables and everything, and also store tests in one folder despite a 
+project being accros several directories. This means I will also need to be able
+to define a project and the filesystem constraints on the project. So for this 
+version I will just save tests in the same directory as the file location as the
+program it was created from.
+
+the functions:
+------------------------------------------
+create-test <test_name>
+run-test <test name>
+run-default-test 
+
+Addtest <test_name>:
+will open up a new buffer and allow you to create a new test file. When the file
+is run it will be run according to my testing script, so it will have to follow
+the format of that.
+
+This function officially works. It also allows you to edit the file
+
+Runtest <test_name>:
+this will run a test by it's name. Test should be stored in same location as 
+the file that is being edited.
+
+This works and is in my .vimrc. It checks if the file exists, then runs the script
+ on the given test file, and pipes the output of the script into a new split
+
+run-default-test:
+**Note** This will likely not be used in the first version of the testing system
+because it will need to have the default test defined somewhere.
+
+will run the test that is deemed to be the default given the cursor location.
+it can be a test that is default for the whole damn project or even just the 
+file that you are working on.
